@@ -5,12 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout self
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           path: ${{ github.repository }}
 
       - name: checkout ACL
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           repository: atcoder/ac-library
           path: ac-library
