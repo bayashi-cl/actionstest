@@ -1,11 +1,17 @@
-name: test
-on: push
+# name: test
+# on: push
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     setps:
+#       -name: echos
+#         run: |
+#           echo "Hello acions!!"
+#           pwd
+name: GitHub Actions Demo
+on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    setps:
-    - name: echos
-      run: |
-        echo "Hello acions!!"
-        pwd
+    steps:
+      - run: Hello acions!!
