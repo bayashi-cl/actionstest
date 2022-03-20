@@ -6,8 +6,8 @@ jobs:
     steps:
       - name: checkout self
         uses: actions/checkout@v2
-        with:
-          path: ${{ github.repository }}
+        # with:
+        #   path: ${{ github.repository }}
 
       # - name: checkout ACL
       #   uses: actions/checkout@v2
@@ -28,5 +28,5 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # CPLUS_INCLUDE_PATH: ${{ github.workspace }}/ac-library
-        working-directory: ./${{ github.repository }}
+        # working-directory: ./${{ github.repository }}
         run: oj-verify all
