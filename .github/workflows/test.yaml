@@ -9,11 +9,11 @@ jobs:
         with:
           path: ${{ github.repository }}
 
-      # - name: checkout ACL
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: atcoder/ac-library
-      #     path: ac-library
+      - name: checkout ACL
+        uses: actions/checkout@v3
+        with:
+          repository: atcoder/ac-library
+          path: ac-library
 
       # - name: echos
       #   run: ls ${{ github.workspace }}
@@ -34,6 +34,6 @@ jobs:
       - name: verify
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # CPLUS_INCLUDE_PATH: ${{ github.workspace }}/ac-library
+          CPLUS_INCLUDE_PATH: ${{ github.workspace }}/ac-library
         working-directory: ./${{ github.repository }}
         run: oj-verify all
