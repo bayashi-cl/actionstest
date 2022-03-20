@@ -14,4 +14,4 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: Hello acions!!
+      - run: echo "Hello acions!!"
