@@ -4,14 +4,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: checkout self
         uses: actions/checkout@v3
         with:
-          submodules: recursive
+          path: self
+
+      - name: checkout ACL
+        uses: actions/checkout@v3
+        with:
+          repository: atcoder/ac-library
+          path: ac-library
 
       - name: echos
         run: |
-          ls ${{ github.workspace }} -R
+          ls ${{ github.workspace }}
 
       - name: env test
         env:
