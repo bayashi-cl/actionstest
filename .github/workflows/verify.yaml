@@ -1,7 +1,7 @@
-name: test
+name: verify
 on: push
 jobs:
-  test:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - name: checkout self
@@ -14,15 +14,6 @@ jobs:
         with:
           repository: atcoder/ac-library
           path: ac-library
-
-
-      # - name: echos
-      #   run: ls ${{ github.workspace }}
-
-      # - name: env test
-      #   env:
-      #     CPLUS_INCLUDE_PATH: ${{ github.workspace }}/ac-library
-      #   run: ls ${CPLUS_INCLUDE_PATH}
 
       - name: Set up Python
         uses: actions/setup-python@v3
