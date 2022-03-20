@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
 
     setps:
-      - name: echos
-        run: |
-          echo "Hello acions!!"
-          pwd
+    - name: echos
+      run: |
+        echo "Hello acions!!"
+        pwd
