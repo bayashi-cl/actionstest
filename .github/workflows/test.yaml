@@ -7,19 +7,33 @@ jobs:
       - name: checkout self
         uses: actions/checkout@v3
         with:
-          path: self
+          path: ${{ github.repository }}
 
-      - name: checkout ACL
-        uses: actions/checkout@v3
-        with:
-          repository: atcoder/ac-library
-          path: ac-library
+      # - name: checkout ACL
+      #   uses: actions/checkout@v3
+      #   with:
+      #     repository: atcoder/ac-library
+      #     path: ac-library
 
       - name: echos
-        run: |
-          ls ${{ github.workspace }}
+        run: ls ${{ github.workspace }}
 
       - name: env test
         env:
           CPLUS_INCLUDE_PATH: ${{ github.workspace }}/ac-library
         run: ls ${CPLUS_INCLUDE_PATH}
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.8"
+
+      - name: Install dependencies
+        run: pip install git+https://github.com/bayashi-cl/verification-helper@modify
+
+      - name: verify
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CPLUS_INCLUDE_PATH: ${{ github.workspace }}/ac-library
+        working-directory: ./${{ github.repository }}
+        run: oj-verify all
