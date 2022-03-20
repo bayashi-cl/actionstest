@@ -1,20 +1,12 @@
-# name: test
-# on: push
-# jobs:
-#   test:
-#     runs-on: ubuntu-latest
-#     setps:
-#       - name: echos
-#         run: |
-#           echo "Hello acions!!"
-#           pwd
-name: GitHub Actions Demo
-on: [push]
+name: test
+on: push
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: List files in the repository
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: echos
         run: |
-          ls ${{ github.workspace }}
-          pwd
+          ls ${{ github.workspace }} -R
