@@ -7,35 +7,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # v2にするとgh-pagesへのpushで落ちる
     - name: checkout self
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: ${{ github.repository }}
+        # これをしないとgh-pagesへのpushで落ちる
         fetch-depth: 0
 
-    # - name: check tree
-    #   run: |
-    #     pwd
-    #     ls -R
-
-
     - name: checkout ACL
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: atcoder/ac-library
         path: ac-library
 
-    # - name: Set up Python
-    #   uses: actions/setup-python@v1
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
         python-version: "3.8"
 
     - name: Install dependencies
-      run: pip3 install -U online-judge-verify-helper
-      # run: pip install git+https://github.com/bayashi-cl/verification-helper@modify
+      run: pip install git+https://github.com/bayashi-cl/verification-helper@modify
 
     - name: Run tests
       env:
