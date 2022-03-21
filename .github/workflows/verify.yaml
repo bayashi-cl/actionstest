@@ -10,10 +10,13 @@ jobs:
     # v2にするとgh-pagesへのpushで落ちる
     - uses: actions/checkout@v1
       with:
-       path: ${{ github.repository }}
+       path: self
 
     - name: check tree
-      run: ls -R
+      run: |
+        pwd
+        ls -R
+
 
     # - name: checkout ACL
     #   uses: actions/checkout@v2
