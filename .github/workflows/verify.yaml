@@ -10,8 +10,7 @@ jobs:
     # v2にするとgh-pagesへのpushで落ちる
     - uses: actions/checkout@v1
       with:
-        path: ${{ github.workspace }}/${{ github.repository }}
-    #   path: ${{ github.repository }}
+       path: ${{ github.repository }}
 
     - name: check tree
       run: ls -R
