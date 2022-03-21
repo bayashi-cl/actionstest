@@ -18,7 +18,7 @@ data:
     #include <bits/stdc++.h>
 
 
-    // #include <atcoder/modint>
+    #include <atcoder/modint>
 
     using namespace std;
 
@@ -30,7 +30,7 @@ data:
     #include <bits/stdc++.h>
 
 
-    // #include <atcoder/modint>
+    #include <atcoder/modint>
 
     using namespace std;
 
@@ -41,7 +41,7 @@ data:
   isVerificationFile: true
   path: acl.test.cpp
   requiredBy: []
-  timestamp: '2022-03-21 06:45:00+09:00'
+  timestamp: '2022-03-21 14:49:18+09:00'
   verificationStatus: TEST_ACCEPTED
   verifiedWith: []
 documentation_of: acl.test.cpp
