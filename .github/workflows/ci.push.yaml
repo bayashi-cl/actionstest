@@ -35,4 +35,9 @@ jobs:
         run: poetry run mypy .
       - name: test
         if: always()
-        run: poetry run pytest
+        run: poetry run pytest --junit-xml pytest.xml
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          junit_files: "pytest.xml"
