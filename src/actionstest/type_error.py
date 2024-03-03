@@ -3,4 +3,4 @@ def no_annotation():
 
 
 def wrong_type() -> int:
-    return "0"
+    return 0
