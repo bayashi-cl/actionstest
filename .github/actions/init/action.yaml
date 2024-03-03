@@ -1,18 +1,24 @@
 name: "library setup"
+description: "setup poetry"
 runs:
   using: "composite"
   steps:
     - name: install poetry
       run: pipx install poetry
+      shell: bash
+
     - name: add PATH (for act)
       if: ${{ env.ACT }}
       run: echo '/root/.local/bin' >> $GITHUB_PATH
+      shell: bash
 
     - uses: actions/setup-python@v5
       id: setup-python
       with:
         python-version-file: "pyproject.toml"
         cache: poetry
+      shell: bash
 
     - name: install
       run: poetry install
+      shell: bash
