@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "actionstest"
+version = "0.0.1"
+description = ""
+authors = ["Masaki Kobayashi <bayashi.cl@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.2"
+mypy = "^1.8.0"
+ruff = "^0.3.0"
+pytest-github-actions-annotate-failures = "^0.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

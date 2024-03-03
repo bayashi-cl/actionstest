@@ -1,0 +1,64 @@
+name: verify
+
+on:
+  - push
+  - workflow_dispatch
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        id: setup-python
+        with:
+          python-version-file: "pyproject.toml"
+          # cache: poetry
+
+      - name: install poetry
+        run: pipx install poetry
+      - name: add PATH (for act)
+        if: ${{ env.ACT }}
+        run: echo '/root/.local/bin' >> $GITHUB_PATH
+
+      - name: get venv
+        run: echo "VENV_PATH=$(poetry config virtualenvs.path)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          path: ${{ env.VENV_PATH }}
+          key: ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
+            ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-
+          save-always: true
+
+      - name: install
+        run: poetry install
+
+      - name: save cache # save-alwaysが動作していないので暫定対応
+        if: always() && steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: ${{ env.VENV_PATH }}
+          key: ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
+
+      - name: format
+        run: poetry run ruff format --check
+      - name: lint
+        if: always()
+        run: poetry run ruff check --output-format github
+
+      - name: type
+        if: always()
+        run: poetry run mypy .
+      - name: test
+        if: always()
+        run: poetry run pytest --junit-xml pytest.xml
+
+      - name: Publish Unit Test Results
+        if: ${{ !env.ACT && always() }}
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          junit_files: "pytest.xml"
