@@ -15,6 +15,19 @@ jobs:
         if: ${{ env.ACT }}
         run: echo '/root/.local/bin' >> $GITHUB_PATH
 
+      - name: get venv
+        run: echo "VENV_PATH=$(poetry config virtualenvs.path)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        id: cache
+        with:
+          path: ${{ env.VENV_PATH }}
+          key: ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
+            ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-
+          save-always: true
+
       - uses: actions/setup-python@v5
         id: setup-python
         with:
@@ -24,19 +37,12 @@ jobs:
       - name: install
         run: poetry install
 
-      - name: get venv
-        run: |
-          poetry env use ${{ steps.setup-python.outputs.python-version }}
-          echo "VENV_PATH=$(poetry env info --path)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
+      - name: save cache # save-alwaysが動作していないので暫定対応
+        if: always() && steps.cache.outputs.cache_hit != 'true'
+        uses: actions/cache/save@v3
         with:
           path: ${{ env.VENV_PATH }}
           key: ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('poetry.lock') }}
-            ${{ runner.os }}-poetry_venv-${{ steps.setup-python.outputs.python-version }}-
-          save-always: true
 
       - name: format
         run: poetry run ruff format --check
