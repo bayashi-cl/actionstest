@@ -26,7 +26,7 @@ jobs:
 
       - name: type
         if: always()
-        run: poetry run mypy .
+        run: poetry run mypy . --junit-xml mypy.xml
       - name: test
         if: always()
         run: poetry run pytest --junit-xml pytest.xml
@@ -35,4 +35,6 @@ jobs:
         if: ${{ !env.ACT && always() }}
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          junit_files: "pytest.xml"
+          junit_files: |
+            mypy.xml
+            pytest.xml
