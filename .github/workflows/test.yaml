@@ -5,4 +5,19 @@ on:
   - workflow_dispatch
 
 jobs:
-  on: ubuntu_latest
+  test:
+    runs-on: ubuntu_latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
+      - name: Run tests
+        run: uv run pytest tests
