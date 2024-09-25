@@ -1,0 +1,8 @@
+name: test-selenium
+
+on:
+  - push
+  - workflow_dispatch
+
+jobs:
+  on: ubuntu_latest
